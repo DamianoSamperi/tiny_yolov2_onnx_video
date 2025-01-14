@@ -64,6 +64,25 @@ COPY ./ /${REPOSITORY_NAME}
 
 WORKDIR /${REPOSITORY_NAME}
 
+# Download videos from GitHub
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/bolt-detection.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/bolt-multi-size-detection.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/bottle-detection.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/car-detection.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/classroom.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/driver-action-recognition.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/face-demographics-walking-and-pause.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/face-demographics-walking.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/fruit-and-vegetable-detection.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/head-pose-face-detection-female-and-male.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/head-pose-face-detection-female.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/head-pose-face-detection-male.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/one-by-one-person-detection.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/people-detection.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/person-bicycle-car-detection.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/store-aisle-detection.mp4 -P /${REPOSITORY_NAME}/video
+RUN wget https://github.com/intel-iot-devkit/sample-videos/raw/master/worker-zone-detection.mp4 -P /${REPOSITORY_NAME}/video
+
 # Download model and labels
 RUN wget ${LABEL_URL}
 RUN wget ${MODEL_URL}
