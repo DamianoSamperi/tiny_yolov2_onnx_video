@@ -43,8 +43,11 @@ RUN apt-get update && \
         liblapack-dev && \
     rm -rf /var/lib/apt/lists/*
 
+# Install a more recent version of Cython (>= 0.29.21) before numpy
+RUN pip3 install --upgrade cython
+
 # Install Python dependencies
-RUN pip3 install setuptools Cython wheel
+RUN pip3 install setuptools wheel
 RUN pip3 install numpy==1.19.5 protobuf==3.16.0
 RUN pip3 install --no-deps "onnx>=1.6.0,<=1.11.0"
 RUN pip3 install \
