@@ -48,7 +48,7 @@ RUN pip3 install --upgrade cython
 
 # Install Python dependencies
 RUN pip3 install setuptools wheel
-RUN pip3 install numpy protobuf==3.19.6
+RUN pip3 install numpy --prefer-binary protobuf==3.19.6
 RUN pip3 install --no-deps "onnx>=1.6.0,<=1.11.0"
 RUN pip3 install \
         Pillow>=5.2.0 \
