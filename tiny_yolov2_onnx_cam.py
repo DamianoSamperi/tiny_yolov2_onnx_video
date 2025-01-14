@@ -138,12 +138,9 @@ def download_model():
 def main():
     # Parse the command line parameters
     parser = argparse.ArgumentParser(description='Tiny YOLO v2 Object Detector')
-    parser.add_argument('--camera', '-c', \
-        type=int, default=0, metavar='CAMERA_NUM', \
-        help='Camera number')
-    parser.add_argument('--csi', \
-        action='store_true', \
-        help='Use CSI camera')
+    parser.add_argument('--video', '-v', \
+        type=str, default='', metavar='VIDEO_PATH', \
+        help='Path to the video file')
     parser.add_argument('--width', \
         type=int, default=1280, metavar='WIDTH', \
         help='Capture width')
@@ -158,25 +155,19 @@ def main():
         help='Threshold of NMS algorithm (between 0 and 1)')
     args = parser.parse_args()
 
-    if args.csi or (args.camera < 0):
+    if args.video:
+        # Open the video file
+        cap = cv2.VideoCapture(args.video)
+    else:
+        # Fall back to the camera (similar to your original code)
         if args.camera < 0:
             args.camera = 0
         # Open the MIPI-CSI camera
         gst_cmd = GST_STR_CSI \
             % (args.width, args.height, FPS, args.camera, args.width, args.height)
         cap = cv2.VideoCapture(gst_cmd, cv2.CAP_GSTREAMER)
-    else:
-        # Open the V4L2 camera
-        cap = cv2.VideoCapture(args.camera)
-        # Set the capture parameters
-        #cap.set(cv2.CAP_PROP_FPS, FPS)     # Comment-out for OpenCV 4.1
-        cap.set(cv2.CAP_PROP_FRAME_WIDTH, args.width)
-        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, args.height)
 
     # Get the actual frame size
-    # OpenCV 4.1 does not get the correct frame size
-    #act_width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-    #act_height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
     act_width = args.width
     act_height = args.height
     frame_info = 'Frame:%dx%d' %  (act_width, act_height)
@@ -227,8 +218,9 @@ def main():
 
             # Capture a frame
             ret, img = cap.read()
-            if ret != True:
-                continue
+            if not ret:
+                print("End of video stream.")
+                break  # Exit loop if the video ends
 
             # Reshape the capture image for Tiny YOLO v2
             rs_img = cv2.resize(img, INPUT_RES)
