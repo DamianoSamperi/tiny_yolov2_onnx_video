@@ -2,7 +2,7 @@
 # Dockerfile to build the image of the tiny_yolov2_onnx_cam application
 #
 
-ARG BASE_IMAGE=nvcr.io/nvidia/l4t-base:r32.5.0
+ARG BASE_IMAGE=nvcr.io/nvidia/l4t-base:r32.7.1
 FROM ${BASE_IMAGE}
 
 ARG REPOSITORY_NAME=tiny_yolov2_onnx_cam
