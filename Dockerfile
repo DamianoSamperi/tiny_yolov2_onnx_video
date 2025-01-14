@@ -45,6 +45,7 @@ RUN apt-get update && \
 
 # Install a more recent version of Cython (>= 0.29.21) before numpy
 RUN pip3 install --upgrade cython
+RUN pip3 install --upgrade pip
 
 # Install Python dependencies
 RUN pip3 install setuptools wheel
