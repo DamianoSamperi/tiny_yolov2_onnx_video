@@ -17,11 +17,15 @@ ENV LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
 
 WORKDIR /tmp
 
+# Install ca-certificates and update package lists
 RUN apt-get update && apt-get install -y ca-certificates
+
+# Add Nvidia apt source and GPG key for secure package installation
 COPY  nvidia-l4t-apt-source.list /etc/apt/sources.list.d/nvidia-l4t-apt-source.list
 COPY  jetson-ota-public.asc /etc/apt/trusted.gpg.d/jetson-ota-public.asc
 RUN apt-get update
 
+# Install dependencies, including Cython and build tools
 RUN apt-get update && \
     apt-get install -y libopencv-python && \
     apt-get install -y --no-install-recommends \
@@ -33,11 +37,15 @@ RUN apt-get update && \
         libjpeg8-dev \
         protobuf-compiler \
         libprotoc-dev \
-        cmake && \
+        cmake \
+        cython3 \
+        libopenblas-dev \
+        liblapack-dev && \
     rm -rf /var/lib/apt/lists/*
 
+# Install Python dependencies
 RUN pip3 install setuptools Cython wheel
-RUN pip3 install numpy protobuf==3.16.0
+RUN pip3 install numpy==1.19.5 protobuf==3.16.0
 RUN pip3 install --no-deps "onnx>=1.6.0,<=1.11.0"
 RUN pip3 install \
         Pillow>=5.2.0 \
@@ -45,10 +53,12 @@ RUN pip3 install \
         pycuda>=2017.1.1 \
         paho-mqtt
 
+# Create and copy repository files into the container
 RUN mkdir /${REPOSITORY_NAME}
 COPY ./ /${REPOSITORY_NAME}
 
 WORKDIR /${REPOSITORY_NAME}
 
+# Download model and labels
 RUN wget ${LABEL_URL}
 RUN wget ${MODEL_URL}
