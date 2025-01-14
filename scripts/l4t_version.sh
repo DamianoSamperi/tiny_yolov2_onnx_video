@@ -40,11 +40,11 @@ L4T_VERSION="$L4T_RELEASE.$L4T_REVISION"
 echo "L4T BSP Version:  L4T R$L4T_VERSION"
 
 # Check if the L4T version is 32.7.6, and change behavior accordingly
-if [ "$L4T_VERSION" == "r32.7.6" ]; then
-    echo "Detected L4T version r32.7.6. Switching to use r32.7.1."
+if [ "$L4T_VERSION" == "32.7.6" ]; then
+    echo "Detected L4T version 32.7.6. Switching to use 32.7.1."
     # Aggiungi qui le operazioni da fare se la versione è 24.7.6
     # Ad esempio, potresti voler usare una specifica versione del software
-    L4T_VERSION="r32.7.1"
+    L4T_VERSION="32.7.1"
 else
     echo "Using L4T version: $L4T_VERSION"
 fi
